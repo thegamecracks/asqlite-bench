@@ -27,8 +27,8 @@ This benchmark package has native support for the [yappi] asynchronous profiler.
 To profile the benchmarks:
 
 1. Install yappi with `pip install yappi`
-2. Use the `-p/--profile` option to specify the [pstats] file to write, e.g.
-   `py -m asqlite_bench -p 1-inserts.stats queries/1-inserts.toml`
+2. Use the `-p/--profile` option to write a [pstats] file after completion, e.g.
+   `py -m asqlite_bench queries/1-inserts.toml --profile`
 
 [asqlite]: https://github.com/Rapptz/asqlite
 [yappi]: https://github.com/sumerc/yappi

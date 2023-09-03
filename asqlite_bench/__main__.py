@@ -2,6 +2,7 @@ import argparse
 import asyncio
 import logging
 import sys
+from pathlib import Path
 
 from .runners import runner
 from .queries import load_query_spec
@@ -23,6 +24,21 @@ def stop_yappi_and_dump(filename: str) -> None:
     yappi.stop()
     stats = yappi.get_func_stats()
     stats.save(filename, "pstat")
+
+
+def resolve_profile_path(args: argparse.Namespace) -> str:
+    if args.profile.lower() != "auto":
+        return args.profile
+
+    path = Path(args.queries.name)
+    path = path.with_stem(
+        "{stem}-c{c}".format(
+            stem=path.stem,
+            c=args.connections,
+        )
+    )
+    path = path.with_suffix(".stats")
+    return path.name
 
 
 async def main():
@@ -51,7 +67,9 @@ async def main():
     parser.add_argument(
         "-p",
         "--profile",
+        const="auto",
         help="a filename to dump pstats results to (requires yappi)",
+        nargs="?",
     )
     parser.add_argument(
         "queries",
@@ -73,6 +91,7 @@ async def main():
 
     if args.profile:
         start_yappi()
+        args.profile = resolve_profile_path(args)
 
     queries = load_query_spec(args.queries)
     await runner(
