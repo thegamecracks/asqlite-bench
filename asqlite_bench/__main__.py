@@ -77,7 +77,7 @@ async def main():
     parser.add_argument(
         "queries",
         help="query specification file to run",
-        type=argparse.FileType(encoding="utf-8"),
+        type=argparse.FileType("rb"),
     )
 
     args = parser.parse_args()

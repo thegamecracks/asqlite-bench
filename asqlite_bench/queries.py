@@ -61,6 +61,11 @@ class QuerySpec:
             yield (value,)
 
 
-def load_query_spec(file: io.IOBase) -> QuerySpec:
-    """Loads a query specification from a JSON file."""
+def load_query_spec(file: io.BufferedReader) -> QuerySpec:
+    """Loads a query specification from a JSON or TOML file."""
+    if file.name.endswith(".toml"):
+        import tomllib
+
+        return QuerySpec(**tomllib.load(file))
+
     return QuerySpec(**json.load(file))
