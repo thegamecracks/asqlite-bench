@@ -24,27 +24,6 @@ def stop_yappi_and_dump(filename: str) -> None:
     stats = yappi.get_func_stats()
     stats.save(filename, "pstat")
 
-    # # Merge stats from all threads
-    # # NOTE: this doesn't seem to help with tracking sqlite3 calls
-    # with tempfile.TemporaryDirectory() as dirname:
-    #     stats_dir = Path(dirname)
-    #
-    #     threads = list(yappi.get_thread_stats())
-    #     first_stats = yappi.get_func_stats(ctx_id=threads[0].id)
-    #
-    #     for thread in threads[1:]:
-    #
-    #         stats = yappi.get_func_stats(ctx_id=thread.id)
-    #         if first_stats is None:
-    #             first_stats = stats
-    #         else:
-    #             stats_file = stats_dir / str(thread.id)
-    #             stats_filename = str(stats_file)
-    #             stats.save(stats_filename)
-    #             first_stats.add(stats_filename)
-    #
-    #     first_stats.save(filename, "pstat")
-
 
 async def main():
     parser = argparse.ArgumentParser(
