@@ -6,7 +6,7 @@ This repository contains my own preliminary benchmarks for [asqlite].
 
 1. Clone this repository
 2. Install asqlite with `pip install git+https://github.com/Rapptz/asqlite`
-3. Run `py -m asqlite_bench queries/1-inserts.json`
+3. Run `py -m asqlite_bench queries/1-inserts.toml`
 
 > [!WARNING]
 >
@@ -24,7 +24,7 @@ that supports asyncio such as [yappi]. To start:
 
 1. Install yappi with `pip install yappi`
 2. Use the `-p/--profile` option when running benchmarks to specify the [pstats] file
-   to write, e.g. `py -m asqlite_bench -p 1-inserts.stats queries/1-inserts.json`
+   to write, e.g. `py -m asqlite_bench -p 1-inserts.stats queries/1-inserts.toml`
 
 [asqlite]: https://github.com/Rapptz/asqlite
 [yappi]: https://github.com/sumerc/yappi
