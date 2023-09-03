@@ -30,6 +30,10 @@ To profile the benchmarks:
 2. Use the `-p/--profile` option to write a [pstats] file after completion, e.g.
    `python -m asqlite_bench queries/1-inserts.toml --profile`
 
+You may also want to use [snakeviz], a browser-based visualizer for profiler
+stat outputs.
+
 [asqlite]: https://github.com/Rapptz/asqlite
 [yappi]: https://github.com/sumerc/yappi
 [pstats]: https://docs.python.org/3/library/profile.html#pstats.Stats
+[snakeviz]: https://pypi.org/project/snakeviz/
