@@ -23,8 +23,9 @@ Since the benchmarks use asyncio, profiling must be done with a package
 that supports asyncio such as [yappi]. To start:
 
 1. Install yappi with `pip install yappi`
-2. Run benchmarks through yappi using the entrypoint script, e.g.
-   `yappi -c wall -o 1-inserts.stats yappi_entrypoint.py queries/1-inserts.json`
+2. Use the `-p/--profile` option when running benchmarks to specify the [pstats] file
+   to write, e.g. `py -m asqlite_bench -p 1-inserts.stats queries/1-inserts.json`
 
 [asqlite]: https://github.com/Rapptz/asqlite
 [yappi]: https://github.com/sumerc/yappi
+[pstats]: https://docs.python.org/3/library/profile.html#pstats.Stats
