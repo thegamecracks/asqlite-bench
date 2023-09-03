@@ -2,6 +2,10 @@
 
 This repository contains my own preliminary benchmarks for [asqlite].
 
+## Requirements
+
+Benchmarks should be ran using Python 3.11 or greater.
+
 ## Usage
 
 1. Clone this repository
