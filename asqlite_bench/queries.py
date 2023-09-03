@@ -1,5 +1,4 @@
 import io
-import json
 from typing import Any, Iterator, Sequence
 
 
@@ -67,5 +66,7 @@ def load_query_spec(file: io.BufferedReader) -> QuerySpec:
         import tomllib
 
         return QuerySpec(**tomllib.load(file))
+
+    import json
 
     return QuerySpec(**json.load(file))
