@@ -23,7 +23,7 @@ Benchmarks should be ran using Python 3.11 or greater.
 
 ## Profiling
 
-This benchmark package has integration support with the [yappi] asynchronous profiler.
+This benchmark package has native support for the [yappi] asynchronous profiler.
 To profile the benchmarks:
 
 1. Install yappi with `pip install yappi`
