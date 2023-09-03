@@ -25,6 +25,9 @@ def _delete_database(database: str) -> None:
     path = Path(database)
     path.unlink()
 
+    # (despite the above procedure, the shared memory file might still exist)
+    path.with_suffix(f"{path.suffix}-shm").unlink(missing_ok=True)
+
 
 def _get_conn_kwargs() -> dict[str, Any]:
     return {
