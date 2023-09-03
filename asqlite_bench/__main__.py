@@ -14,7 +14,7 @@ def start_yappi():
         sys.exit("yappi must be installed to use -p/--profile option")
 
     yappi.set_clock_type("WALL")
-    yappi.start()
+    yappi.start(builtins=True)
 
 
 def stop_yappi_and_dump(filename: str) -> None:
