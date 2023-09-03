@@ -1,0 +1,10 @@
+{
+    "setup": "CREATE TABLE inserts       (a, b, c, d, e, f, g);",
+    "query": "INSERT INTO inserts VALUES (?, ?, ?, ?, ?, ?, ?)",
+    "args": [
+        {
+            "row": [1, 2.3, "4567890", 16384, 65536, "foobar2000", "xkcd"],
+            "repeat": 1000
+        }
+    ]
+}
