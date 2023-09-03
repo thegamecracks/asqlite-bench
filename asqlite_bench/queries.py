@@ -11,6 +11,8 @@ class QuerySpec:
         One or more queries to run before the benchmark.
     query: str
         The query to be benchmarked.
+    repeat: int
+        The number of times to repeat the query.
     args: list[Any]
         The arguments to pass to the query.
 
@@ -36,18 +38,25 @@ class QuerySpec:
         *,
         setup: str = "",
         query: str,
-        args: list[Any],
+        repeat: int = 1,
+        args: list[Any] | None = None,
     ):
         self.setup = setup
         self.query = query
-        self.args = args
+        self.repeat = repeat
+        self.args = args or []
 
     def iter_args(self) -> Iterator[Sequence[Any]]:
         """
         Parses and iterates through the arguments to be used in executing the query.
         """
-        for value in self.args:
-            yield from self._expand_args(value)
+        for _ in range(self.repeat):
+            if not self.args:
+                yield ()
+                continue
+
+            for value in self.args:
+                yield from self._expand_args(value)
 
     def _expand_args(self, value: Any) -> Iterator[Sequence[Any]]:
         if isinstance(value, list):

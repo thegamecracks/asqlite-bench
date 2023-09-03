@@ -1,0 +1,3 @@
+setup = "CREATE TABLE numbers AS SELECT value FROM generate_series(1, 1000);"
+query = "SELECT value FROM numbers"
+repeat = 1000

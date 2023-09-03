@@ -34,7 +34,8 @@ def _get_conn_kwargs() -> dict[str, Any]:
 
 async def run_query(pool: Pool, query: str, args: Sequence[Any]) -> None:
     async with pool.acquire() as conn:
-        await conn.execute(query, *args)
+        c = await conn.execute(query, *args)
+        await c.fetchall()
 
 
 async def run_queries(pool: Pool, queries: QuerySpec) -> None:
