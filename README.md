@@ -12,15 +12,6 @@ Benchmarks should be ran using Python 3.11 or greater.
 2. Install asqlite with `pip install git+https://github.com/Rapptz/asqlite`
 3. Run `python -m asqlite_bench queries/1-inserts.toml`
 
-> [!WARNING]
->
-> The following benchmarks depend on [#13](https://github.com/Rapptz/asqlite/pull/13)
-> being merged into asqlite for database cleanup to run correctly.
-> Until this is complete, the above command should be amended with `--no-cleanup`,
-> requiring you to delete the database file artifacts after each run.
-> Alternatively, you can install the PR yourself with
-> `pip install git+https://github.com/thegamecracks/asqlite@bf435508d507aec3929b6d3bc3cd94dfe82efa81`.
-
 ## Profiling
 
 This benchmark package has native support for the [yappi] asynchronous profiler.
