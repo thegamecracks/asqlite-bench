@@ -1,11 +1,14 @@
 import argparse
 import asyncio
 import logging
+import sqlite3
 import sys
 from pathlib import Path
 
 from .runners import runner
 from .queries import load_query_spec
+
+log = logging.getLogger(__name__)
 
 
 def start_yappi():
@@ -88,6 +91,8 @@ async def main():
             level=level,
             stream=sys.stdout,
         )
+
+    log.info("SQLite version: %s", sqlite3.sqlite_version)
 
     if args.profile:
         start_yappi()
