@@ -23,6 +23,10 @@ class Connection(Protocol):
     async def execute(self, sql: str, *params) -> Cursor:
         raise NotImplementedError
 
+    @abstractmethod
+    async def executescript(self, sql: str) -> Cursor:
+        raise NotImplementedError
+
 
 class Cursor(Protocol):
     @abstractmethod
