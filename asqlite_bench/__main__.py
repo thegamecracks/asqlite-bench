@@ -75,6 +75,13 @@ async def main():
         nargs="?",
     )
     parser.add_argument(
+        "-m",
+        "--module",
+        choices=["asqlite", "aiosqlite"],
+        default="asqlite",
+        help="the module to test",
+    )
+    parser.add_argument(
         "queries",
         help="query specification file to run",
         type=argparse.FileType("rb"),
@@ -102,6 +109,7 @@ async def main():
     await runner(
         queries,
         cleanup=args.cleanup,
+        module=args.module,
         n_connections=args.connections,
     )
 

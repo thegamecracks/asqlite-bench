@@ -66,7 +66,7 @@ async def runner(
     queries: QuerySpec,
     *,
     cleanup: bool = True,
-    module: Literal["asqlite", "aiosqlite"] = "asqlite",
+    module: Literal["asqlite", "aiosqlite"],
     n_connections: int,
 ):
     database_path = "asqlite_bench.db"
