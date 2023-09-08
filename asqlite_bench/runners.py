@@ -5,7 +5,7 @@ import time
 from pathlib import Path
 from typing import Any, AsyncContextManager, Literal, Sequence
 
-from .pools import Pool
+from .pools import AIOSQLitePool, Pool
 from .queries import QuerySpec
 
 log = logging.getLogger(__name__)
@@ -28,7 +28,7 @@ def _delete_database(database: str) -> None:
 
 
 def create_pool(
-    module: Literal["asqlite"],
+    module: Literal["asqlite", "aiosqlite"],
     *,
     path: str,
     size: int,
@@ -37,6 +37,8 @@ def create_pool(
         import asqlite
 
         return asqlite.create_pool(path, size=size)
+    elif module == "aiosqlite":
+        return AIOSQLitePool(path, size=size)
     else:
         raise RuntimeError(f"Unknown module {module!r}")
 
@@ -64,11 +66,13 @@ async def runner(
     queries: QuerySpec,
     *,
     cleanup: bool = True,
+    module: Literal["asqlite", "aiosqlite"] = "asqlite",
     n_connections: int,
 ):
     database_path = "asqlite_bench.db"
+    log.info("Creating %s pool", module)
     pool_connector = create_pool(
-        "asqlite",
+        module,
         path=database_path,
         size=n_connections,
     )
