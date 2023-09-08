@@ -3,9 +3,7 @@ import logging
 import sqlite3
 import time
 from pathlib import Path
-from typing import Any, Sequence
-
-import asqlite
+from typing import Any, AsyncContextManager, Literal, Sequence
 
 from .pools import Pool
 from .queries import QuerySpec
@@ -29,10 +27,18 @@ def _delete_database(database: str) -> None:
     path.with_suffix(f"{path.suffix}-shm").unlink(missing_ok=True)
 
 
-def _get_conn_kwargs() -> dict[str, Any]:
-    return {
-        "database": "asqlite_bench.db",
-    }
+def create_pool(
+    module: Literal["asqlite"],
+    *,
+    path: str,
+    size: int,
+) -> AsyncContextManager[Pool]:
+    if module == "asqlite":
+        import asqlite
+
+        return asqlite.create_pool(path, size=size)
+    else:
+        raise RuntimeError(f"Unknown module {module!r}")
 
 
 async def run_query(pool: Pool, query: str, args: Sequence[Any]) -> None:
@@ -60,9 +66,12 @@ async def runner(
     cleanup: bool = True,
     n_connections: int,
 ):
-    conn_kwargs = _get_conn_kwargs()
-    conn_kwargs["size"] = n_connections
-    pool_connector = asqlite.create_pool(**conn_kwargs)
+    database_path = "asqlite_bench.db"
+    pool_connector = create_pool(
+        "asqlite",
+        path=database_path,
+        size=n_connections,
+    )
 
     try:
         async with pool_connector as pool:
@@ -75,4 +84,4 @@ async def runner(
             print(f"Finished in {elapsed:.3f}s")
     finally:
         if cleanup:
-            _delete_database(conn_kwargs["database"])
+            _delete_database(database_path)

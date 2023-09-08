@@ -1,13 +1,28 @@
+from __future__ import annotations
+
 from abc import abstractmethod
 from contextlib import asynccontextmanager
-from typing import AsyncContextManager, AsyncGenerator, Protocol, Self
+from typing import TYPE_CHECKING, Any, AsyncContextManager, AsyncGenerator, Protocol, Self
 
-import asqlite
+if TYPE_CHECKING:
+    import asqlite
+
+
+class Connection(Protocol):
+    @abstractmethod
+    async def execute(self, sql: str, *params) -> Cursor:
+        raise NotImplementedError
+
+
+class Cursor(Protocol):
+    @abstractmethod
+    async def fetchall(self) -> list[Any]:
+        raise NotImplementedError
 
 
 class Pool(Protocol):
     @abstractmethod
-    def acquire(self) -> AsyncContextManager[asqlite.Connection]:
+    def acquire(self) -> AsyncContextManager[Connection]:
         raise NotImplementedError
 
 
@@ -24,5 +39,7 @@ class NullPool(Pool):
 
     @asynccontextmanager
     async def acquire(self) -> AsyncGenerator[asqlite.Connection, None]:
+        import asqlite
+
         async with asqlite.connect(*self.conn_args, **self.conn_kwargs) as conn:
             yield conn
