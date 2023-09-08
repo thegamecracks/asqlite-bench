@@ -20,11 +20,11 @@ if TYPE_CHECKING:
 
 class Connection(Protocol):
     @abstractmethod
-    async def execute(self, sql: str, *params) -> Cursor:
+    async def execute(self, sql: str, /, *params) -> Cursor:
         raise NotImplementedError
 
     @abstractmethod
-    async def executescript(self, sql: str) -> Cursor:
+    async def executescript(self, sql: str, /) -> Cursor:
         raise NotImplementedError
 
 
